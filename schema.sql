@@ -1,3 +1,7 @@
+--  이것도 주석
+# 이것도 주석
+DROP TABLE users;
+
 -- 사용자 테이블 생성
 CREATE TABLE users (
                        user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -6,6 +10,10 @@ CREATE TABLE users (
                        age INT,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE users RENAME COLUMN username TO nickname;
+# alter table users
+#                change nickname username varchar(255) not null
 
 -- 상품 테이블 생성
 CREATE TABLE products (
