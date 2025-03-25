@@ -4,20 +4,20 @@ DROP TABLE users;
 
 -- 사용자 테이블 생성
 CREATE TABLE users (
-                       user_id INT PRIMARY KEY AUTO_INCREMENT,
-                        # PRIMARY KEY : NOT NULL + UNIQUE -> 테이블마다 1개만 존재 가능. 외부 테이블에서 외래키. FOREIGN KEY 로 쓸 수 있게 함.
-                        # AUTO_INCREMENT : 추가 시도가 있을 경우 일단 1을 늘리고...
-                       username VARCHAR(255) UNIQUE NOT NULL,
-                        # NULL? DB에서는 좀... 빈 텍스트로 인식하는 곳도 있고, 진짜 null...
-                        # NULL -> 비교가 일반적인 방식으로 안 된다
-                        # UNIQUE는 옵션을 지정한 해당 열에 대해서 중복을 허용하지 않음
-                        # VARCHAR(길이) -> CHAR => 고정된 길이. VARCHAR => 일단 짧은 것부터 시작하고... 긴게 들어오면 차츰 늘어나요
-                       email VARCHAR(255) UNIQUE NOT NULL,
-                       age INT, # INT(길이) -> 생략하고 최대 길이를 준 것.
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                        # TIMESTAMP 날짜,시간 -> DEFAULT - CURRENT_TIMESTAMP
-                        # '시간'은 지역마다... 기준 -> UTC -> 영국시간.
-                        # KST or UTC+9
+   user_id INT PRIMARY KEY AUTO_INCREMENT,
+    # PRIMARY KEY : NOT NULL + UNIQUE -> 테이블마다 1개만 존재 가능. 외부 테이블에서 외래키. FOREIGN KEY 로 쓸 수 있게 함.
+    # AUTO_INCREMENT : 추가 시도가 있을 경우 일단 1을 늘리고...
+   username VARCHAR(255) UNIQUE NOT NULL,
+    # NULL? DB에서는 좀... 빈 텍스트로 인식하는 곳도 있고, 진짜 null...
+    # NULL -> 비교가 일반적인 방식으로 안 된다
+    # UNIQUE는 옵션을 지정한 해당 열에 대해서 중복을 허용하지 않음
+    # VARCHAR(길이) -> CHAR => 고정된 길이. VARCHAR => 일단 짧은 것부터 시작하고... 긴게 들어오면 차츰 늘어나요
+   email VARCHAR(255) UNIQUE NOT NULL,
+   age INT, # INT(길이) -> 생략하고 최대 길이를 준 것.
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    # TIMESTAMP 날짜,시간 -> DEFAULT - CURRENT_TIMESTAMP
+    # '시간'은 지역마다... 기준 -> UTC -> 영국시간.
+    # KST or UTC+9
 );
 
 ALTER TABLE users RENAME COLUMN username TO nickname;
@@ -50,36 +50,36 @@ DELETE FROM users WHERE user_id = 7; # 다른 조건을 넣어도 되긴 함...
 
 -- 상품 테이블 생성
 CREATE TABLE products (
-                          product_id INT PRIMARY KEY AUTO_INCREMENT,
-                          product_name VARCHAR(255) NOT NULL,
-                          price DECIMAL(10, 2) NOT NULL,
-                            # DECIMAL -> 소수점. 전체 10자리 중에 2자리를 소수점에 할당하겠다
-                          category VARCHAR(255),
-                          stock INT DEFAULT 0
+      product_id INT PRIMARY KEY AUTO_INCREMENT,
+      product_name VARCHAR(255) NOT NULL,
+      price DECIMAL(10, 2) NOT NULL,
+        # DECIMAL -> 소수점. 전체 10자리 중에 2자리를 소수점에 할당하겠다
+      category VARCHAR(255),
+      stock INT DEFAULT 0
 );
 
 -- 주문 테이블 생성
 CREATE TABLE orders (
-                        order_id INT PRIMARY KEY AUTO_INCREMENT,
-                        user_id INT,
-                        product_id INT,
-                        quantity INT,
-                        order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        # 이 칼럼은 명시적으로 외부로부터 참조할 것입니다
-                        # 연결관계입니다 -> PRIMARY KEY...
-                        # cascading -> users 삭제가 되었다 => orders?
-                        FOREIGN KEY (user_id) REFERENCES users(user_id),
-                        FOREIGN KEY (product_id) REFERENCES products(product_id)
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    product_id INT,
+    quantity INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    # 이 칼럼은 명시적으로 외부로부터 참조할 것입니다
+    # 연결관계입니다 -> PRIMARY KEY...
+    # cascading -> users 삭제가 되었다 => orders?
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 -- 리뷰 테이블 생성
 CREATE TABLE reviews (
-                         review_id INT PRIMARY KEY AUTO_INCREMENT,
-                         user_id INT,
-                         product_id INT,
-                         rating INT,
-                         comment TEXT, # 아주 긴 varchar
-                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         FOREIGN KEY (user_id) REFERENCES users(user_id),
-                         FOREIGN KEY (product_id) REFERENCES products(product_id)
+     review_id INT PRIMARY KEY AUTO_INCREMENT,
+     user_id INT,
+     product_id INT,
+     rating INT,
+     comment TEXT, # 아주 긴 varchar
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FOREIGN KEY (user_id) REFERENCES users(user_id),
+     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
