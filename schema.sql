@@ -1,6 +1,6 @@
 --  이것도 주석
 # 이것도 주석
-DROP TABLE users;
+# DROP TABLE users;
 
 -- 사용자 테이블 생성
 CREATE TABLE users (
@@ -20,32 +20,32 @@ CREATE TABLE users (
     # KST or UTC+9
 );
 
-ALTER TABLE users RENAME COLUMN username TO nickname;
+# ALTER TABLE users RENAME COLUMN username TO nickname;
 # alter table users
 #                change nickname username varchar(255) not null
 
-INSERT INTO users (username, email, age) values ('john', 'john@gmail.com', 20);
+# INSERT INTO users (username, email, age) values ('john', 'john@gmail.com', 20);
 # INSERT INTO users (username, email, age) values ('johnson', 'john@gmail.com', 20);
 # email도 중복되면 안된다!
-INSERT INTO users (username, email, age) values ('johnson', 'johnson@gmail.com', 20);
+# INSERT INTO users (username, email, age) values ('johnson', 'johnson@gmail.com', 20);
 
-SELECT * FROM users; # SELECT * (모든 컬럼) FROM (내가 지정하고자하는 테이블 이름)
+# SELECT * FROM users; # SELECT * (모든 컬럼) FROM (내가 지정하고자하는 테이블 이름)
 # john 5, johnson 6 (저의 경우)
-UPDATE users SET age = 2000; # 조건을 꼭 주세요!
-DELETE FROM users; # ??????????????????????? 한 번 같이 울고... '잘 하자'
+# UPDATE users SET age = 2000; # 조건을 꼭 주세요!
+# DELETE FROM users; # ??????????????????????? 한 번 같이 울고... '잘 하자'
 # JPA -> CREATE (유사한 절망...) 이게 H2가 아니라면? local도 아니고 dev 아니고 실서버 production이라면?
 # SELECT -> FROM WHERE
 # INSERT -> 테이블이름 (컬럼들) values (값들)
 # UPDATE -> 테이블이름 set 수정하려는 값 where 조건
 # DELETE -> FROM WHERE
 
-SELECT * FROM users;
+# SELECT * FROM users;
 # 대입연산자도 =이고, 동등(일치)연산자도 =이야.(???)
 # 동명이인 이슈. unique면 상관없는데... 모두 kevin이 되었습니다(?) 어랏.
 # + 접근을 해야해 => id가 있으면. 우리가 일부러 만들어준 것.
-UPDATE users SET username = 'kevin' WHERE username = 'john';
-UPDATE users SET username = 'carrol' WHERE user_id = 7; # 자연적이지 않은 일부러 부여한 기본키
-DELETE FROM users WHERE user_id = 7; # 다른 조건을 넣어도 되긴 함...
+# UPDATE users SET username = 'kevin' WHERE username = 'john';
+# UPDATE users SET username = 'carrol' WHERE user_id = 7; # 자연적이지 않은 일부러 부여한 기본키
+# DELETE FROM users WHERE user_id = 7; # 다른 조건을 넣어도 되긴 함...
 # 어떤 조건이 있는 데이터(튜)들의 id를 모아가지고 그걸 삭제 처리
 
 -- 상품 테이블 생성
