@@ -155,6 +155,13 @@ SELECT `상품명`, `판매 수량` FROM
          GROUP BY product_id) AS so) AS tmp
     ON op.`판매 수량` = tmp.m;
 -- 07. 사용자별 총 주문 금액을 조회하세요.
+SELECT username, sum(quantity * price) `총 주문 금액`
+    FROM users
+    JOIN orders
+    USING (user_id)
+    JOIN products
+    USING (product_id)
+    GROUP BY user_id;
 -- 08. 평균 별점이 4점 이상인 상품의 이름과 평균 별점을 조회하세요.
 -- 09. 상품별 리뷰 수를 조회하고, 리뷰 수가 2개 이상인 상품만 조회하세요.
 -- 10. T-shirt를 구매한 사용자의 이름과 이메일을 조회하세요.
