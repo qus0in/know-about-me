@@ -99,6 +99,61 @@ SELECT category,
 # - G => ? GROUP BY에서 사용한 컬럼, (그룹연산이 필요한 묶음들)
 
 -- 06. 가장 많이 팔린 상품의 이름과 판매 수량을 조회하세요.
+SELECT * FROM orders;
+# SELECT product_id, product_name, sum(quantity)
+SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+    FROM orders
+    JOIN products
+    USING (product_id)
+    GROUP BY product_id;
+SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+    FROM orders
+    JOIN products
+  USING (product_id)
+    GROUP BY product_id
+    ORDER BY `판매 수량` ASC;
+    # ASCENDING -> 오름차순 => 데이터가 전개되는 방향과 데이터가 증가하는 방향이 같게 정렬함
+SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+FROM orders
+         JOIN products
+              USING (product_id)
+GROUP BY product_id
+ORDER BY `판매 수량` DESC
+LIMIT 1; # DESC 테이블 vs ORDER BY 컬럼명 DESC
+SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+FROM orders
+     JOIN products
+      USING (product_id)
+GROUP BY product_id;
+# ASCENDING -> 오름차순 => 데이터가 전개되는 방향과 데이터가 증가하는 방향이 같게 정렬함
+SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+FROM orders
+         JOIN products
+              USING (product_id)
+GROUP BY product_id
+HAVING sum(quantity) = (
+    SELECT max(sq) FROM
+    (SELECT sum(quantity) AS sq
+     FROM orders
+     GROUP BY product_id) AS so);
+SELECT `상품명`, `판매 수량` FROM
+     (SELECT product_name AS '상품명',
+       sum(quantity) AS '판매 수량'
+         FROM orders
+         JOIN products
+          USING (product_id)
+            GROUP BY product_id) AS op
+    JOIN
+    (SELECT max(sq) AS m FROM
+        (SELECT sum(quantity) AS sq
+         FROM orders
+         GROUP BY product_id) AS so) AS tmp
+    ON op.`판매 수량` = tmp.m;
 -- 07. 사용자별 총 주문 금액을 조회하세요.
 -- 08. 평균 별점이 4점 이상인 상품의 이름과 평균 별점을 조회하세요.
 -- 09. 상품별 리뷰 수를 조회하고, 리뷰 수가 2개 이상인 상품만 조회하세요.
