@@ -163,6 +163,36 @@ SELECT username, sum(quantity * price) `총 주문 금액`
     USING (product_id)
     GROUP BY user_id;
 -- 08. 평균 별점이 4점 이상인 상품의 이름과 평균 별점을 조회하세요.
+SELECT product_name, rating
+    FROM products
+    JOIN reviews
+    using (product_id);
+
+INSERT INTO reviews (user_id, product_id, rating, comment) VALUES
+                                                               (2, 1, 4, '품질이 좋습니다'),
+                                                               (3, 2, 5, '기대 이상의 제품이에요!'),
+                                                               (4, 3, 4, '배송이 빠르고 상품도 좋아요'),
+                                                               (1, 4, 3, '평범한 제품입니다'),
+                                                               (4, 5, 5, '매우 만족합니다'),
+                                                               (2, 3, 1, '최악의 제품입니다. 돈 낭비였어요'),
+                                                               (3, 1, 5, '완벽한 제품입니다'),
+                                                               (4, 2, 4, '가성비가 좋아요'),
+                                                               (4, 4, 1, '사용할 수 없을 정도로 품질이 나쁩니다'),
+                                                               (1, 5, 4, '재구매 의사 있습니다'),
+                                                               (3, 3, 1, '배송도 늦고 제품도 불량이에요'),
+                                                               (3, 5, 2, '기대에 많이 미치지 못합니다'),
+                                                               (2, 4, 2, '가격 대비 품질이 좋지 않아요'),
+                                                               (1, 2, 2, '디자인은 괜찮지만 기능이 부족해요'),
+                                                               (2, 5, 2, '내구성이 떨어지고 쉽게 고장납니다'),
+                                                               (4, 1, 3, '보통 수준입니다');
+
+SELECT product_name AS `상품명`, avg(rating) `평균 별점`
+FROM products
+JOIN reviews
+  using (product_id)
+GROUP BY product_id
+HAVING avg(rating) >= 4;
+
 -- 09. 상품별 리뷰 수를 조회하고, 리뷰 수가 2개 이상인 상품만 조회하세요.
 -- 10. T-shirt를 구매한 사용자의 이름과 이메일을 조회하세요.
 
