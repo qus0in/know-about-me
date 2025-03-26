@@ -85,8 +85,19 @@ JOIN (SELECT product_id, product_name
   using (product_id)
 WHERE rating >= 4;
 
-
 -- 05. 카테고리별 상품 수를 조회하세요.
+SELECT * FROM products;
+# SELECT * FROM products GROUP BY category;
+# 그룹연산 (count, sum, avg, min, max...)
+# 근데 영향을 안 받는게 있다~ GROUP BY에 언급되었다면 그냥 쓸 수 있다
+SELECT category,
+       count(*) AS '상품수',
+       sum(stock) AS '전체수량'
+    FROM products
+    GROUP BY category;
+# FWGHSO
+# - G => ? GROUP BY에서 사용한 컬럼, (그룹연산이 필요한 묶음들)
+
 -- 06. 가장 많이 팔린 상품의 이름과 판매 수량을 조회하세요.
 -- 07. 사용자별 총 주문 금액을 조회하세요.
 -- 08. 평균 별점이 4점 이상인 상품의 이름과 평균 별점을 조회하세요.
