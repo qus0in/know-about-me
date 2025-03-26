@@ -39,7 +39,53 @@ SELECT *
     JOIN products p # 1-3
     ON o.product_id = p.product_id;
 # 여기까지만...
--- 04. 별점 4점 이상인 리뷰의 상품 이름과 리뷰 내용을 조회하세요.
+-- 04. 별점(rating) 4점 이상인 리뷰(reviews)의 상품 이름(???)과 리뷰 내용(comment)을 조회하세요.
+desc orders;
+desc users;
+desc products; # product_name
+desc reviews; # rating!
+SELECT * FROM reviews;
+SELECT * FROM reviews WHERE rating >= 4;
+SELECT count(*) FROM reviews; # 5
+SELECT count(*) FROM products; # 5
+SELECT count(*)
+    FROM reviews, products; # 5 x 5 = 25 -> 카테시안 곱
+# 내추럴 조인
+SELECT count(*)
+    FROM reviews, products
+    WHERE reviews.product_id = products.product_id;
+# SELECT *
+SELECT product_name, comment
+    FROM reviews, products
+    WHERE reviews.product_id = products.product_id
+    AND rating >= 4; # 1.267s
+SELECT product_name, comment
+    FROM reviews
+    JOIN products
+    ON reviews.product_id = products.product_id
+    WHERE rating >= 4; # 1.318s
+
+SELECT product_name, comment
+FROM reviews
+    JOIN products
+    ON reviews.product_id = products.product_id
+    AND rating >= 4; # 1.318s
+
+SELECT product_name, comment
+FROM reviews
+JOIN products
+using (product_id)
+WHERE rating >= 4; # 1.2s # 미묘미묘~
+
+SELECT product_name, comment
+FROM (SELECT product_id, comment, rating
+      FROM reviews) AS r
+JOIN (SELECT product_id, product_name
+      FROM products) AS p
+  using (product_id)
+WHERE rating >= 4;
+
+
 -- 05. 카테고리별 상품 수를 조회하세요.
 -- 06. 가장 많이 팔린 상품의 이름과 판매 수량을 조회하세요.
 -- 07. 사용자별 총 주문 금액을 조회하세요.
