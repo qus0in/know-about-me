@@ -196,4 +196,5 @@ HAVING avg(rating) >= 4;
 -- 09. 상품별 리뷰 수를 조회하고, 리뷰 수가 2개 이상인 상품만 조회하세요.
 -- 10. T-shirt를 구매한 사용자의 이름과 이메일을 조회하세요.
 
-# 와일드카드, IS NULL, IFNULL, index, function, procedure, trigger(event)
+# LIKE(와일드카드), IS NULL, IFNULL, index, function, procedure, trigger(event), UNION (ALL)
+# 정규화, 반정규화 (성능차이)
